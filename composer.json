@@ -1,0 +1,44 @@
+{
+    "name": "tekkla/core-data",
+    "description": "Abstraction layer to query databases via PDO.",
+    "license": "MIT",
+    "type": "library",
+    "keywords":
+    [
+        "pdo",
+        "abstraction",
+        "oop"
+    ],
+
+    "homepage": "https://github.com/tekkla/core-data",
+    "autoload":
+    {
+        "psr-0":
+        {
+            "Core\\Data": ""
+        }
+    },
+
+    "authors":
+    [
+        {
+            "name": "Michael Zorn",
+            "email": "tekkla@tekkla.de",
+            "role": "Developer"
+        }
+    ],
+
+    "require":
+    {
+        "php": ">=7.0.0",
+        "tekkla/core-toolbox": ">=0.0.1"
+    },
+
+    "repositories":
+    [
+        {
+            "type": "composer",
+            "url": "https://packagist.org/"
+        }
+    ]
+}
