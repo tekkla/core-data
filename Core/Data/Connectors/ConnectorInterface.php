@@ -17,31 +17,31 @@ interface ConnectorInterface
     /**
      * Injects a callback handler
      *
-     * @param CallbackHandlerInterface $callback_handler            
+     * @param CallbackHandlerInterface $callback_handler
      */
     public function injectCallbackHandler(CallbackHandlerInterface $callback_handler);
 
     /**
      * Injects a schemehandler
      *
-     * @param SchemeHandlerInterface $scheme_handler            
+     * @param SchemeHandlerInterface $scheme_handler
      */
     public function injectSchemeHandler(SchemeHandlerInterface $scheme_handler);
 
     /**
      * Adds a callback to an injected callback handler
      *
-     * @param string $call            
-     * @param array $args            
-     * @param bool $clear_callbacks_stack            
+     * @param mixed $call
+     * @param array $args
+     * @param bool $clear_callbacks_stack
      */
-    public function addCallback(string $call, array $args = [], bool $clear_callbacks_stack = true);
+    public function addCallback($call, array $args = [], bool $clear_callbacks_stack = true);
 
     /**
      * Adds a stack of callbacks to an injected callback handler
      *
-     * @param array $callbacks            
-     * @param bool $clear_callbacks_stack            
+     * @param array $callbacks
+     * @param bool $clear_callbacks_stack
      */
     public function addCallbacks(array $callbacks = [], bool $clear_callbacks_stack = true);
 
@@ -53,7 +53,7 @@ interface ConnectorInterface
     /**
      * Executes callbacks and an injected schemehandler
      *
-     * @param mixed $data            
+     * @param mixed $data
      */
     public function executeCallbackAndSchemeHandler($data);
 }

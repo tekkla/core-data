@@ -55,12 +55,12 @@ abstract class AbstractConnector implements ConnectorInterface
      *
      * @see \Core\Data\Connectors\ConnectorInterface::addCallback()
      */
-    public function addCallback(string $call, array $args = [], bool $clear_callbacks_stack = true)
+    public function addCallback($call, array $args = [], bool $clear_callbacks_stack = true)
     {
         if (!isset($this->callback_handler)) {
             Throw new ConnectorException('Adding callbacks to a connector that has no set CallbackHandler is not possible.');
         }
-        
+
         $this->callback_handler->addCallback($call, $args, $clear_callbacks_stack);
     }
 
@@ -75,7 +75,7 @@ abstract class AbstractConnector implements ConnectorInterface
         if (!isset($this->callback_handler)) {
             Throw new ConnectorException('Adding callbacks to a connector that has no set CallbackHandler is not possible.');
         }
-        
+
         $this->callback_handler->addCallbacks($callbacks, $clear_callbacks_stack);
     }
 
@@ -90,7 +90,7 @@ abstract class AbstractConnector implements ConnectorInterface
         if (!isset($this->callback_handler)) {
             Throw new ConnectorException('Clearing callbacks of a connector that has no set CallbackHandler is not possible.');
         }
-        
+
         $this->callback_handler->clearCallbacks();
     }
 
@@ -102,45 +102,45 @@ abstract class AbstractConnector implements ConnectorInterface
      */
     public function executeCallbackAndSchemeHandler($data)
     {
-        
+
         // Do nothing when there is no handler at all!
         if (empty(count($this->callback_handler)) && !isset($this->scheme_handler)) {
             return $data;
         }
-        
+
         if ($data instanceof DataObjectInterface) {
-            
+
             $result = false;
-            
+
             if (isset($this->callback_handler)) {
                 $result = $this->callback_handler->execute($data);
             }
-            
+
             if ($result instanceof DataObjectInterface && isset($this->scheme_handler)) {
                 $this->scheme_handler->excecute($data);
             }
-            
+
             $result = $data;
         }
         elseif (is_array($data)) {
-            
+
             $result = [];
-            
+
             foreach ($data as $data_object) {
-                
+
                 if (isset($this->callback_handler)) {
                     $callback_result = $this->callback_handler->execute($data_object);
                 }
-                
+
                 if ($callback_result === false) {
                     continue;
                 }
-                
+
                 if (isset($this->scheme_handler)) {
                     $this->scheme_handler->excecute($data_object);
                     $primary = $this->scheme_handler->getPrimary();
                 }
-                
+
                 // Use the existing primary field name from scheme when it's available in data
                 if (!empty($primary) && !empty($data_object->{$primary})) {
                     $result[$data_object->{$primary}] = $data_object;
@@ -150,7 +150,7 @@ abstract class AbstractConnector implements ConnectorInterface
                 }
             }
         }
-        
+
         return $result;
     }
 }
