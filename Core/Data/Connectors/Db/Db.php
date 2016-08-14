@@ -57,16 +57,16 @@ class Db extends AbstractConnector
     /**
      * Constructor
      *
-     * @param \PDO $pdo            
-     * @param string $prefix            
+     * @param \PDO $pdo
+     * @param string $prefix
      */
     public function __construct(\PDO $pdo, $prefix)
     {
         $this->prefix = $prefix;
-        
+
         // Connect to db
         $this->dbh = $pdo;
-        
+
         // Inject an empty DataAdapter object
         $this->injectCallbackHandler(new CallbackHandler());
     }
@@ -99,19 +99,19 @@ class Db extends AbstractConnector
      *            QueryBuilder definition array
      * @param bool $autoexec
      *            Optional flag to autoexecute the created query
-     *            
+     *
      * @return \PDOStatement
      */
     public function qb(array $definition, $autoexec = false)
     {
         $builder = new QueryBuilder($definition);
-        
+
         // Build sql string
         $this->sql = $builder->build();
-        
+
         // Get params
         $this->params = $builder->getParams();
-        
+
         return $this->query($autoexec);
     }
 
@@ -124,7 +124,7 @@ class Db extends AbstractConnector
      *            Optional parameter array
      * @param boolean $autoexec
      *            Optional flag to autoexecute query
-     *            
+     *
      * @return PDOStatement
      */
     public function sql($sql, array $params = [], $autoexec = false)
@@ -132,7 +132,7 @@ class Db extends AbstractConnector
         // Store Sql / definition and parameter
         $this->sql = (string) $sql;
         $this->params = $params;
-        
+
         return $this->query($autoexec);
     }
 
@@ -141,22 +141,22 @@ class Db extends AbstractConnector
      *
      * @param boolean $exec
      *            Optional autoexec flag
-     *            
+     *
      * @return \PDOStatement | queryresult
      */
     private function query($autoexec = false)
     {
         // Reset PDO statement
         $this->stmt = null;
-        
+
         $this->stmt = $this->dbh->prepare(str_replace('{db_prefix}', $this->prefix, $this->sql));
-        
+
         if (!empty($this->params)) {
             foreach ($this->params as $parameter => $value) {
                 $this->stmt->bindValue($parameter, $value);
             }
         }
-        
+
         if ($autoexec === true) {
             return $this->execute();
         }
@@ -192,11 +192,11 @@ class Db extends AbstractConnector
                     $type = \PDO::PARAM_STR;
             }
         }
-        
+
         if (is_array($value)) {
             $value = implode(', ', $value);
         }
-        
+
         $this->stmt->bindValue($param, $value, $type);
     }
 
@@ -213,7 +213,7 @@ class Db extends AbstractConnector
     public function bindParam($param, &$value, $type = null)
     {
         if (is_null($type)) {
-            
+
             switch (true) {
                 case is_int($value):
                     $type = \PDO::PARAM_INT;
@@ -228,7 +228,7 @@ class Db extends AbstractConnector
                     $type = \PDO::PARAM_STR;
             }
         }
-        
+
         $this->stmt->bindParam($param, $value, $type);
     }
 
@@ -250,13 +250,13 @@ class Db extends AbstractConnector
     public function all()
     {
         $this->execute();
-        
+
         $data = $this->stmt->fetchAll(\PDO::FETCH_CLASS, '\Core\Data\DataObject');
-        
+
         if (!empty($data)) {
             $data = $this->executeCallbackAndSchemeHandler($data);
         }
-        
+
         return $data;
     }
 
@@ -265,13 +265,13 @@ class Db extends AbstractConnector
      *
      * @param PDO $fetch_mode
      *            Optional PDO fetchmode constant (Default: \PDO::FETCH_ASSOC)
-     *            
+     *
      * @return mixed
      */
     public function fetchAll($fetch_style = \PDO::FETCH_ASSOC, $fetch_argument = null, array $ctor_args = null)
     {
         $this->execute();
-        
+
         if (empty($fetch_argument)) {
             $data = $this->stmt->fetchAll($fetch_style);
         }
@@ -283,7 +283,7 @@ class Db extends AbstractConnector
                 $data = $this->stmt->fetchAll($fetch_style, $fetch_argument, $ctor_args);
             }
         }
-        
+
         return $data;
     }
 
@@ -295,13 +295,13 @@ class Db extends AbstractConnector
     public function single()
     {
         $this->execute();
-        
+
         $data = $this->stmt->fetchObject('\Core\Data\DataObject');
-        
+
         if (!empty($data)) {
             $data = $this->executeCallbackAndSchemeHandler($data);
         }
-        
+
         return $data;
     }
 
@@ -310,13 +310,13 @@ class Db extends AbstractConnector
      *
      * @param PDO $fetch_mode
      *            Optional PDO fetchmode constant (Default: \PDO::FETCH_ASSOC)
-     *            
+     *
      * @return mixed
      */
     public function fetch($fetch_style = \PDO::FETCH_ASSOC, $fetch_argument = null, array $ctor_args = null)
     {
         $this->execute();
-        
+
         if (empty($fetch_argument)) {
             $data = $this->stmt->fetch($fetch_style);
         }
@@ -328,7 +328,7 @@ class Db extends AbstractConnector
                 $data = $this->stmt->fetch($fetch_style, $fetch_argument, $ctor_args);
             }
         }
-        
+
         return $data;
     }
 
@@ -337,13 +337,13 @@ class Db extends AbstractConnector
      *
      * @param number $column
      *            Number of column to return (Default: 0)
-     *            
+     *
      * @return array
      */
     public function column($column = 0)
     {
         $this->execute();
-        
+
         return $this->stmt->fetchAll(\PDO::FETCH_COLUMN, $column);
     }
 
@@ -355,7 +355,7 @@ class Db extends AbstractConnector
     public function value()
     {
         $this->execute();
-        
+
         return $this->stmt->fetchColumn();
     }
 
@@ -368,7 +368,7 @@ class Db extends AbstractConnector
      *            Optional filterstatement (Default: empty)
      * @param array $params
      *            Optional parameter array to be used in filter (Default: empty)
-     *            
+     *
      * @return number
      */
     public function count($table, $filter = '', array $params = [])
@@ -377,18 +377,18 @@ class Db extends AbstractConnector
             'table' => $table,
             'fields' => 'COUNT(*)'
         ];
-        
+
         if ($filter) {
-            
+
             $query['filter'] = $filter;
-            
+
             if ($params) {
                 $query['params'] = $params;
             }
         }
-        
+
         $this->qb($query);
-        
+
         return $this->value();
     }
 
@@ -411,7 +411,7 @@ class Db extends AbstractConnector
                 ':' . $key_field => $value
             ]
         ]);
-        
+
         return $this->single();
     }
 
@@ -431,17 +431,17 @@ class Db extends AbstractConnector
             'table' => $table,
             'method' => 'DELETE'
         ];
-        
+
         if ($filter) {
             $query['filter'] = $filter;
-            
+
             if ($params) {
                 $query['params'] = $params;
             }
         }
-        
+
         $this->qb($query, true);
-        
+
         return true;
     }
 
@@ -453,7 +453,7 @@ class Db extends AbstractConnector
     public function rowCount()
     {
         $this->execute();
-        
+
         return $this->stmt->rowCount();
     }
 
@@ -465,7 +465,7 @@ class Db extends AbstractConnector
     public function columnCount()
     {
         $this->execute();
-        
+
         return $this->stmt->columnCount();
     }
 
@@ -528,7 +528,7 @@ class Db extends AbstractConnector
     {
         $this->stmt = null;
         $this->dbh = null;
-        
+
         return true;
     }
 
@@ -541,20 +541,20 @@ class Db extends AbstractConnector
      *            Params prefix (Default: 'prm')
      * @param array $values
      *            Values array
-     *            
+     *
      * @return array
      */
     public function prepareArrayQuery($param_prefix = 'prm', $values = [])
     {
         $params_names = [];
         $params_val = [];
-        
+
         foreach ($values as $key => $val) {
             $name = ':' . $param_prefix . $key;
             $params_name[] = $name;
             $params_val[$name] = $val;
         }
-        
+
         return [
             'sql' => implode(', ', $params_name),
             'values' => $params_val
@@ -569,13 +569,13 @@ class Db extends AbstractConnector
     public function debugSql($sql, $params = [])
     {
         if ($params) {
-            
+
             $indexed = $params == array_values($params);
-            
+
             foreach ($params as $k => $v) {
-                
+
                 if (is_object($v)) {
-                    
+
                     if ($v instanceof \DateTime) {
                         $v = $v->format('Y-m-d H:i:s');
                     }
@@ -592,7 +592,7 @@ class Db extends AbstractConnector
                 elseif (is_array($v)) {
                     $v = implode(',', $v);
                 }
-                
+
                 if ($indexed) {
                     $sql = preg_replace('/\?/', $v, $sql, 1);
                 }
@@ -601,9 +601,9 @@ class Db extends AbstractConnector
                 }
             }
         }
-        
+
         $sql = str_replace('{db_prefix}', $this->prefix, $sql);
-        
+
         return $sql;
     }
 
@@ -640,7 +640,7 @@ class Db extends AbstractConnector
     {
         $scheme_handler = new SchemeHandler();
         $scheme_handler->setScheme($scheme);
-        
+
         $this->injectSchemeHandler($scheme_handler);
     }
 
