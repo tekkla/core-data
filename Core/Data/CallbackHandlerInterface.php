@@ -5,7 +5,7 @@ namespace Core\Data;
  * CallbackHandlerInterface.php
  *
  * @author Michael "Tekkla" Zorn <tekkla@tekkla.de>
- * @copyright 2016
+ * @copyright 2016-2017
  * @license MIT
  */
 interface CallbackHandlerInterface extends \Countable
@@ -47,4 +47,3 @@ interface CallbackHandlerInterface extends \Countable
      */
     public function clearCallbacks();
 }
-

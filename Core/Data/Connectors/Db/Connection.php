@@ -27,7 +27,7 @@ class Connection extends \PDO
      *
      * {@inheritdoc}
      *
-     * @see PDO::__construct()
+     * @see \PDO::__construct()
      */
     public function __construct($dsn, $username = null, $passwd = null, $options = null)
     {

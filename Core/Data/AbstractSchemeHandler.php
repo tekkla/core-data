@@ -5,7 +5,7 @@ namespace Core\Data;
  * AbstractSchemeHandler.php
  *
  * @author Michael "Tekkla" Zorn <tekkla@tekkla.de>
- * @copyright 2016
+ * @copyright 2016-2017
  * @license MIT
  */
 class AbstractSchemeHandler implements SchemeHandlerInterface
@@ -36,12 +36,12 @@ class AbstractSchemeHandler implements SchemeHandlerInterface
             $field = $this->scheme['fields'][$name];
             
             // Is this field flagged as serialized?
-            if (!empty($field['serialize'])) {
+            if (! empty($field['serialize'])) {
                 $value = unserialize($value);
             }
             
             // Empty data value but non empty default value in scheme set? Use it!
-            if (empty($value) && !empty($field['default'])) {
+            if (empty($value) && ! empty($field['default'])) {
                 $value = $field['default'];
             }
         }
@@ -63,9 +63,9 @@ class AbstractSchemeHandler implements SchemeHandlerInterface
      *
      * @see \Core\Data\SchemeHandlerInterface::getPrimary()
      */
-    public function getPrimary()
+    public function getPrimary(): string
     {
-        return !empty($this->scheme['primary']) ? $this->scheme['primary'] : false;
+        return $this->scheme['primary'] ?? '';
     }
 }
 

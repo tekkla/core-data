@@ -1,5 +1,7 @@
 <?php
-namespace Core\Data\Connectors\Db;
+namespace Core\Data\Connectors\Db\Structure;
+
+use Core\Data\Connectors\Db\Db;
 
 /**
  * AbstractTableInfo.php
@@ -35,7 +37,7 @@ abstract class AbstractTableInfo
     /**
      * Constructor
      *
-     * @param Db $db            
+     * @param Db $db
      */
     public function __construct(Db $db, $tbl)
     {
@@ -74,9 +76,9 @@ abstract class AbstractTableInfo
     /**
      * Adds an index to the indexlist.
      *
-     * @param string $name            
-     * @param string $type            
-     * @param string $column            
+     * @param string $name
+     * @param string $type
+     * @param string $column
      */
     protected function addIndex($name, $type, $column)
     {
@@ -102,7 +104,7 @@ abstract class AbstractTableInfo
      * @param bool $detail
      *            Whether or not to return detailed info. If true, returns the column info.
      *            If false, just returns the column names.
-     *            
+     *
      * @return array An array of column names or detailed column info, depending on $detail
      */
     abstract public function loadColumns($tbl);
@@ -114,7 +116,7 @@ abstract class AbstractTableInfo
      *            The name of the table to get indexes for
      * @param bool $detail
      *            Whether or not to return detailed info.
-     *            
+     *
      * @return array An array of index names or a detailed array of index info, depending on $detail
      */
     abstract public function loadIndexes($tbl);

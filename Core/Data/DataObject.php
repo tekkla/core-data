@@ -20,7 +20,7 @@ class DataObject implements DataObjectInterface, \ArrayAccess
      *
      * {@inheritdoc}
      *
-     * @see ArrayAccess::offsetExists()
+     * @see \ArrayAccess::offsetExists()
      */
     public function offsetExists($offset)
     {
@@ -31,7 +31,7 @@ class DataObject implements DataObjectInterface, \ArrayAccess
      *
      * {@inheritdoc}
      *
-     * @see ArrayAccess::offsetGet()
+     * @see \ArrayAccess::offsetGet()
      */
     public function offsetGet($offset)
     {
@@ -46,7 +46,7 @@ class DataObject implements DataObjectInterface, \ArrayAccess
      *
      * {@inheritdoc}
      *
-     * @see ArrayAccess::offsetSet()
+     * @see \ArrayAccess::offsetSet()
      */
     public function offsetSet($offset, $value)
     {
@@ -57,7 +57,7 @@ class DataObject implements DataObjectInterface, \ArrayAccess
      *
      * {@inheritdoc}
      *
-     * @see ArrayAccess::offsetUnset()
+     * @see \ArrayAccess::offsetUnset()
      */
     public function offsetUnset($offset)
     {

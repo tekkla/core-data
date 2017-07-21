@@ -1,5 +1,5 @@
 <?php
-namespace Core\Data\Connectors;
+namespace Core\Data\Connectors\Xml;
 
 use Core\Data\Connectors\AbstractConnector;
 

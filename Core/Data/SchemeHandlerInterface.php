@@ -12,21 +12,25 @@ interface SchemeHandlerInterface
 {
 
     /**
+     * Sets a scheme array
      *
-     * @param array $scheme            
+     * @param array $scheme
      */
     public function setScheme(array $scheme);
 
     /**
+     * Analyzes object against the scheme and takes care of default values and/or serialized data
      *
-     * @param DataObjectInterface $data            
+     * @param DataObjectInterface $data
      */
     public function excecute(DataObjectInterface $data);
 
     /**
-     * Returns name of the set primary field in scheme.
+     * Get name of the set primary field in scheme
      *
-     * @return string|boolean Name of primary field or boolean false when no primary field is set
+     * Will be an empty string when primary is not set in scheme
+     *
+     * @return string
      */
-    public function getPrimary();
+    public function getPrimary(): string;
 }

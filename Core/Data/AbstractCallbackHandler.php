@@ -5,7 +5,7 @@ namespace Core\Data;
  * AbstractCallbackHandler.php
  *
  * @author Michael "Tekkla" Zorn <tekkla@tekkla.de>
- * @copyright 2016
+ * @copyright 2016-2017
  * @license MIT
  */
 abstract class AbstractCallbackHandler implements CallbackHandlerInterface
@@ -18,10 +18,9 @@ abstract class AbstractCallbackHandler implements CallbackHandlerInterface
     private $callbacks = [];
 
     /**
-     * (non-PHPdoc)
      *
-     * @see \Core\Data\Connectors\CallbackInterface::addCallbacks()
-     *
+     * {@inheritdoc}
+     * @see \Core\Data\CallbackHandlerInterface::addCallbacks()
      */
     public function addCallbacks(array $callbacks = [], $clear_callbacks_stack = true)
     {
@@ -32,18 +31,17 @@ abstract class AbstractCallbackHandler implements CallbackHandlerInterface
         foreach ($callbacks as $cb) {
             
             // Check for closure or object. If none is found, throw exception
-            if (!is_callable($cb[0]) || (is_array($cb[0]) && !is_object($cb[0][0]))) {
+            if (! is_callable($cb[0]) || (is_array($cb[0]) && ! is_object($cb[0][0]))) {
                 Throw new DataException('DataAdapter callbacks MUST be either a closure or a valid object.');
             }
             
             // Any callback arguments?
             if (isset($cb[1])) {
-                if (!is_array($cb[1])) {
+                if (! is_array($cb[1])) {
                     $cb[1] = (array) $cb[1];
                 }
                 $args = $cb[1];
-            }
-            else {
+            } else {
                 $args = [];
             }
             
@@ -55,10 +53,6 @@ abstract class AbstractCallbackHandler implements CallbackHandlerInterface
     }
 
     /**
-     * (non-PHPdoc)
-     *
-     * @see \Core\Data\Connectors\CallbackInterface::clearCallbacks()
-     *
      */
     public function clearCallbacks()
     {
@@ -66,15 +60,14 @@ abstract class AbstractCallbackHandler implements CallbackHandlerInterface
     }
 
     /**
-     * (non-PHPdoc)
      *
-     * @see \Core\Data\Connectors\CallbackInterface::addCallback()
-     *
+     * {@inheritdoc}
+     * @see \Core\Data\CallbackHandlerInterface::addCallback()
      */
     public function addCallback($call, array $args = [], $clear_callbacks_stack = true)
     {
         // // Check for closure or object. If none is found, throw exception
-        if (!is_callable($call) || (is_array($call) && !is_object($call[0]))) {
+        if (! is_callable($call) || (is_array($call) && ! is_object($call[0]))) {
             Throw new DataException('Connector callbacks MUST be either a closure or a valid object.');
         }
         
@@ -84,10 +77,15 @@ abstract class AbstractCallbackHandler implements CallbackHandlerInterface
         
         $this->callbacks[] = [
             $call,
-            !is_array($args) ? (array) $args : $args
+            ! is_array($args) ? (array) $args : $args
         ];
     }
 
+    /**
+     *
+     * {@inheritdoc}
+     * @see \Core\Data\CallbackHandlerInterface::execute()
+     */
     public function execute(DataObjectInterface $data)
     {
         
@@ -109,8 +107,7 @@ abstract class AbstractCallbackHandler implements CallbackHandlerInterface
     /**
      *
      * {@inheritdoc}
-     *
-     * @see Countable::count()
+     * @see \Countable::count()
      */
     public function count()
     {
