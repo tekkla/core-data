@@ -551,12 +551,12 @@ class Db extends AbstractConnector
 
         foreach ($values as $key => $val) {
             $name = ':' . $param_prefix . $key;
-            $params_name[] = $name;
+            $params_names[] = $name;
             $params_val[$name] = $val;
         }
 
         return [
-            'sql' => implode(', ', $params_name),
+            'sql' => implode(', ', $params_names),
             'values' => $params_val
         ];
     }
