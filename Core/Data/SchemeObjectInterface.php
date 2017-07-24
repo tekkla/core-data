@@ -11,4 +11,3 @@ namespace Core\Data;
 interface SchemeObjectInterface
 {
 }
-

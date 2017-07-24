@@ -8,7 +8,7 @@ use Core\Data\SchemeHandlerInterface;
  * ConnectorInterface.php
  *
  * @author Michael "Tekkla" Zorn <tekkla@tekkla.de>
- * @copyright 2016
+ * @copyright 2016-2017
  * @license MIT
  */
 interface ConnectorInterface
@@ -57,4 +57,3 @@ interface ConnectorInterface
      */
     public function executeCallbackAndSchemeHandler($data);
 }
-

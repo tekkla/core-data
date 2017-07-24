@@ -11,4 +11,3 @@ namespace Core\Data;
 class CallbackHandler extends AbstractCallbackHandler
 {
 }
-

@@ -22,7 +22,7 @@ abstract class AbstractCallbackHandler implements CallbackHandlerInterface
      * {@inheritdoc}
      * @see \Core\Data\CallbackHandlerInterface::addCallbacks()
      */
-    public function addCallbacks(array $callbacks = [], $clear_callbacks_stack = true)
+    public function addCallbacks(array $callbacks = [], bool $clear_callbacks_stack = true)
     {
         if ($clear_callbacks_stack) {
             $this->clearCallbacks();
@@ -64,7 +64,7 @@ abstract class AbstractCallbackHandler implements CallbackHandlerInterface
      * {@inheritdoc}
      * @see \Core\Data\CallbackHandlerInterface::addCallback()
      */
-    public function addCallback($call, array $args = [], $clear_callbacks_stack = true)
+    public function addCallback($call, array $args = [], bool $clear_callbacks_stack = true)
     {
         // // Check for closure or object. If none is found, throw exception
         if (! is_callable($call) || (is_array($call) && ! is_object($call[0]))) {

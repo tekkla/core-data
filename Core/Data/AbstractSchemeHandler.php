@@ -11,7 +11,11 @@ namespace Core\Data;
 class AbstractSchemeHandler implements SchemeHandlerInterface
 {
 
-    protected $scheme;
+    /**
+     *
+     * @var array
+     */
+    protected $scheme = [];
 
     /**
      * (non-PHPdoc)
@@ -68,4 +72,3 @@ class AbstractSchemeHandler implements SchemeHandlerInterface
         return $this->scheme['primary'] ?? '';
     }
 }
-
