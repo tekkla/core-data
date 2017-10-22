@@ -591,7 +591,7 @@ class Db extends AbstractConnector
     public function getSqlAndParams(): array
     {
         return [
-            'sql' => $this->sql,
+            'sql' => str_replace('{db_prefix}', $this->prefix, $this->sql),
             'params' => $this->params
         ];
     }
