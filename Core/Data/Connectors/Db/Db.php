@@ -101,9 +101,9 @@ class Db extends AbstractConnector
      * @param bool $autoexec
      *            Optional flag to autoexecute the created query
      *            
-     * @return \PDOStatement
+     * @return \PDOStatement | bool
      */
-    public function qb(array $definition, bool $autoexec = false): \PDOStatement
+    public function qb(array $definition, bool $autoexec = false)
     {
         $builder = new QueryBuilder($definition);
         
@@ -126,9 +126,9 @@ class Db extends AbstractConnector
      * @param boolean $autoexec
      *            Optional flag to autoexecute query
      *            
-     * @return \PDOStatement
+     * @return \PDOStatement | bool
      */
-    public function sql(string $sql, array $params = [], bool $autoexec = false): \PDOStatement
+    public function sql(string $sql, array $params = [], bool $autoexec = false)
     {
         // Store Sql / definition and parameter
         $this->sql = $sql;
@@ -143,7 +143,7 @@ class Db extends AbstractConnector
      * @param bool $autoexec
      *            Optional autoexec flag
      *            
-     * @return \PDOStatement | queryresult
+     * @return \PDOStatement | bool
      */
     private function query(bool $autoexec = false)
     {
