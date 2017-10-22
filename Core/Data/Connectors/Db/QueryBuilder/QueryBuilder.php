@@ -215,7 +215,7 @@ class QueryBuilder implements QueryBuilderInterface
     public function Columns($columns = ''): QueryBuilder
     {
         if (empty($columns)) {
-            return;
+            return $this;
         }
         
         if (! is_array($columns)) {
