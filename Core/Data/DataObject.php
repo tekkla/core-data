@@ -5,7 +5,7 @@ namespace Core\Data;
  * DataObject.php
  *
  * @author Michael "Tekkla" Zorn <tekkla@tekkla.de>
- * @copyright 2016
+ * @copyright 2016-2017
  * @license MIT
  */
 class DataObject implements DataObjectInterface, \ArrayAccess
@@ -13,7 +13,7 @@ class DataObject implements DataObjectInterface, \ArrayAccess
 
     public function __get($key)
     {
-        Throw new DataException(sprintf('Field "%s" does not exist in this DataObject', $key));
+        return 'DataObject::' . $key;
     }
 
     /**
@@ -36,7 +36,7 @@ class DataObject implements DataObjectInterface, \ArrayAccess
     public function offsetGet($offset)
     {
         if (!property_exists($this, $offset)) {
-            Throw new DataException(sprintf('Field "%s" does not exist in this DataObject', $offset));
+            return 'DataObject::' . $key;
         }
         
         return $this->{$offset};
