@@ -1,6 +1,8 @@
 <?php
 namespace Core\Data;
 
+use Closure;
+
 /**
  * CallbackHandlerInterface.php
  *
