@@ -25,8 +25,9 @@
 		"tekkla/core-toolbox" : "dev-dev"
 	},
 	"repositories" : [{
-			"type" : "composer",
-			"url" : "https://packagist.org/"
+			"type" : "git",
+			"url" : "https://github.com/tekkla/core-toolbox.git",
+			"name" : "Toolbox"
 		}
 	],
 	"minimum-stability" : "dev"
