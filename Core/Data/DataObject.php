@@ -11,11 +11,6 @@ namespace Core\Data;
 class DataObject implements DataObjectInterface, \ArrayAccess
 {
 
-    public function __get($key)
-    {
-        Throw new DataException(sprintf('Field "%s" does not exist in this DataObject', $key));
-    }
-
     /**
      *
      * {@inheritdoc}
@@ -36,7 +31,7 @@ class DataObject implements DataObjectInterface, \ArrayAccess
     public function offsetGet($offset)
     {
         if (!property_exists($this, $offset)) {
-            Throw new DataException(sprintf('Field "%s" does not exist in this DataObject', $offset));
+            return 'DataObject::' . $offset . ' does not exist';
         }
         
         return $this->{$offset};
