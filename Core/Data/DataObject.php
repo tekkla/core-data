@@ -11,6 +11,10 @@ namespace Core\Data;
 class DataObject implements DataObjectInterface, \ArrayAccess
 {
 
+    public function __get($offset) {
+        return 'DataObject::' . $offset . ' does not exist';
+    }
+    
     /**
      *
      * {@inheritdoc}
