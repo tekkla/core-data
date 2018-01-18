@@ -12,103 +12,103 @@ use Core\Toolbox\Arrays\IsAssoc;
  */
 class QueryBuilder
 {
-
+    
     /**
      *
      * @var string
      */
     private $method = 'SELECT';
-
+    
     /**
      *
      * @var array
      */
     private $definition = [];
-
+    
     /**
      *
      * @var array
      */
     private $scheme = [];
-
+    
     /**
      *
      * @var string
      */
     private $table = '';
-
+    
     /**
      *
      * @var string
      */
     private $alias = '';
-
+    
     /**
      *
      * @var array
      */
     private $fields = [];
-
+    
     /**
      *
      * @var array
      */
     private $values = [];
-
+    
     /**
      *
      * @var array
      */
     private $join = [];
-
+    
     /**
      *
      * @var string
      */
     private $filter = '';
-
+    
     /**
      *
      * @var array
      */
     private $params = [];
-
+    
     /**
      *
      * @var string
      */
     private $order = '';
-
+    
     /**
      *
      * @var string
      */
     private $group_by = '';
-
+    
     /**
      *
      * @var string
      */
     private $having = '';
-
+    
     /**
      *
      * @var string
      */
     private $sql = '';
-
+    
     /**
      *
      * @var array
      */
     private $counter = [];
-
+    
     /**
      *
      * @var array
      */
     private $limit = [];
-
+    
     /**
      * Constructor
      *
@@ -121,13 +121,13 @@ class QueryBuilder
             $this->processQueryDefinition($definition);
         }
     }
-
+    
     /**
      * SELECT statement
      *
      * @param array|string $fields
      *            Fieldlist as comma seperated string or value array.
-     *            
+     *
      * @return \Core\Data\Connectors\Db\QueryBuilder\QueryBuilder
      */
     public function Select($fields = '')
@@ -138,13 +138,13 @@ class QueryBuilder
         
         return $this;
     }
-
+    
     /**
      * SELECT DISTINCT statement
      *
      * @param array|string $fields
      *            Fieldlist as comma seperated string or value array.
-     *            
+     *
      * @return \Core\Data\Connectors\Db\QueryBuilder\QueryBuilder
      */
     public function SelectDistinct($fields = '')
@@ -155,7 +155,7 @@ class QueryBuilder
         
         return $this;
     }
-
+    
     /**
      * INSERT INTO statement
      *
@@ -167,13 +167,13 @@ class QueryBuilder
         
         return $this;
     }
-
+    
     /**
      * INTO statement
      *
      * @param string $tbl
      *            Name of table
-     *            
+     *
      * @return \Core\Data\Connectors\Db\QueryBuilder\QueryBuilder
      */
     public function Into($tbl)
@@ -182,7 +182,7 @@ class QueryBuilder
         
         return $this;
     }
-
+    
     /**
      * DELETE statement
      *
@@ -194,13 +194,13 @@ class QueryBuilder
         
         return $this;
     }
-
+    
     /**
      * Colums to use in query
      *
      * @param array|string $fields
      *            Fieldlist as comma seperated string or value array.
-     *            
+     *
      * @return \Core\Data\Connectors\Db\QueryBuilder\QueryBuilder
      */
     public function Columns($columns = '')
@@ -217,7 +217,7 @@ class QueryBuilder
         
         return $this;
     }
-
+    
     /**
      * From statement
      *
@@ -225,7 +225,7 @@ class QueryBuilder
      *            Table name
      * @param string $alias
      *            Optional: Table alias
-     *            
+     *
      * @return \Core\Data\Connectors\Db\QueryBuilder\QueryBuilder
      */
     public function From($table, $alias = '')
@@ -238,7 +238,7 @@ class QueryBuilder
         
         return $this;
     }
-
+    
     /**
      * Filter statement
      *
@@ -246,7 +246,7 @@ class QueryBuilder
      *            Filterstring
      * @param array $params
      *            Optional: Paramenter list
-     *            
+     *
      * @return \Core\Data\Connectors\Db\QueryBuilder\QueryBuilder
      */
     public function Where($filter, $params = [])
@@ -256,13 +256,13 @@ class QueryBuilder
         
         return $this;
     }
-
+    
     /**
      * Order statement
      *
      * @param string $order
      *            Orderstring
-     *            
+     *
      * @return \Core\Data\Connectors\Db\QueryBuilder\QueryBuilder
      */
     public function Order($order)
@@ -271,7 +271,7 @@ class QueryBuilder
         
         return $this;
     }
-
+    
     /**
      * Join statement
      *
@@ -283,7 +283,7 @@ class QueryBuilder
      *            How to join
      * @param string $condition
      *            Join condition
-     *            
+     *
      * @return \Core\Data\Connectors\Db\QueryBuilder\QueryBuilder
      */
     public function Join($table, $as, $by, $condition)
@@ -297,13 +297,13 @@ class QueryBuilder
         
         return $this;
     }
-
+    
     /**
      * GroupBy statement.
      *
      * @param
      *            string|array field name or list of field names as array
-     *            
+     *
      * @return \Core\Data\Connectors\Db\QueryBuilder\QueryBuilder
      */
     public function GroupBy($field)
@@ -315,10 +315,10 @@ class QueryBuilder
         $this->group_by = $val;
         return $this;
     }
-
+    
     public function Having()
     {}
-
+    
     /**
      * Limit statement
      *
@@ -326,7 +326,7 @@ class QueryBuilder
      *            Lower limit
      * @param int $upper
      *            Optional: Upper limit
-     *            
+     *
      * @return \Core\Data\Connectors\Db\QueryBuilder\QueryBuilder
      */
     public function Limit($lower, $upper = null)
@@ -339,7 +339,7 @@ class QueryBuilder
         
         return $this;
     }
-
+    
     /**
      * Buildss the sql string for select queries
      *
@@ -431,7 +431,7 @@ class QueryBuilder
                 ];
                 
                 break;
-            
+                
             case 'INSERT':
             case 'REPLACE':
                 
@@ -454,31 +454,31 @@ class QueryBuilder
                 ];
                 
                 break;
-            
+                
             case 'DELETE':
                 
                 $pieces = [
-                    $this->method,
-                    'FROM ' . $table,
-                    $filter,
-                    $order,
-                    $limit
+                $this->method,
+                'FROM ' . $table,
+                $filter,
+                $order,
+                $limit
                 ];
                 
                 break;
-            
+                
             default:
                 
                 $pieces = [
-                    $this->method,
-                    $fieldlist,
-                    'FROM ' . $table,
-                    $join,
-                    $filter,
-                    $group_by,
-                    $having,
-                    $order,
-                    $limit
+                $this->method,
+                $fieldlist,
+                'FROM ' . $table,
+                $join,
+                $filter,
+                $group_by,
+                $having,
+                $order,
+                $limit
                 ];
                 
                 break;
@@ -487,33 +487,33 @@ class QueryBuilder
         array_walk_recursive($pieces, function (&$data, $index) {
             $data = trim($data);
         });
-        
-        // Build sql string from pieces
-        $this->sql = trim(implode(' ', $pieces));
-        
-        // Finally cleanup parameters by removing parameter not needed in query and parse array parameter into sql
-        // string.
-        foreach ($this->params as $key => $val) {
             
-            // Do cleanup
-            if (strpos($this->sql, $key) === false) {
-                unset($this->params[$key]);
-                continue;
+            // Build sql string from pieces
+            $this->sql = trim(implode(' ', $pieces));
+            
+            // Finally cleanup parameters by removing parameter not needed in query and parse array parameter into sql
+            // string.
+            foreach ($this->params as $key => $val) {
+                
+                // Do cleanup
+                if (strpos($this->sql, $key) === false) {
+                    unset($this->params[$key]);
+                    continue;
+                }
+                
+                // Replace array parameter against sql valid part
+                if (is_array($val)) {
+                    $prepared = $this->prepareArrayQuery($key, $val);
+                    
+                    array_push($this->params, $prepared['params']);
+                    
+                    $this->sql = str_replace('prep:' . $key, $prepared['sql'], $this->sql);
+                }
             }
             
-            // Replace array parameter against sql valid part
-            if (is_array($val)) {
-                $prepared = $this->prepareArrayQuery($key, $val);
-                
-                array_push($this->params, $prepared['params']);
-                
-                $this->sql = str_replace('prep:' . $key, $prepared['sql'], $this->sql);
-            }
-        }
-        
-        return $this->sql;
+            return $this->sql;
     }
-
+    
     private function buildFieldlist()
     {
         // Create fieldlist
@@ -533,7 +533,7 @@ class QueryBuilder
         // Return complete all fields
         return ($this->alias ? $this->alias : $this->table) . '.*';
     }
-
+    
     /**
      * Builds table name with alias while taking care of the method of the sql create
      *
@@ -558,7 +558,7 @@ class QueryBuilder
         
         return $table;
     }
-
+    
     private function processQueryDefinition($def)
     {
         // Store defintion
@@ -588,15 +588,15 @@ class QueryBuilder
             case 'REPLACE':
                 $this->processInsert();
                 break;
-            
+                
             case 'UPDATE':
                 $this->processUpdate();
                 break;
-            
+                
             case 'DELETE':
                 $this->processDelete();
                 break;
-            
+                
             default:
                 $this->processSelect();
                 break;
@@ -604,7 +604,7 @@ class QueryBuilder
         
         return $this;
     }
-
+    
     private function processSelect()
     {
         $this->processTableDefinition();
@@ -625,7 +625,7 @@ class QueryBuilder
         
         $this->processLimitDefinition();
     }
-
+    
     /**
      * Processes insert definition
      *
@@ -644,7 +644,7 @@ class QueryBuilder
         $this->processFieldDefinition();
         $this->processParamsDefinition();
     }
-
+    
     /**
      *
      * @throws QueryBuilderException
@@ -665,7 +665,7 @@ class QueryBuilder
         $this->processLimitDefinition();
         $this->processOrderDefinition();
     }
-
+    
     private function processDelete()
     {
         $this->processFieldDefinition();
@@ -674,7 +674,7 @@ class QueryBuilder
         $this->processLimitDefinition();
         $this->processParamsDefinition();
     }
-
+    
     /**
      * Processes value defintion.
      * Takes also care of set alias definition.
@@ -714,7 +714,7 @@ class QueryBuilder
             $this->alias = $this->definition['alias'];
         }
     }
-
+    
     private function processCounter()
     {
         if (empty($this->definition['counter'])) {
@@ -738,7 +738,7 @@ class QueryBuilder
             }
         }
     }
-
+    
     /**
      * Processes field definition
      *
@@ -754,7 +754,7 @@ class QueryBuilder
             $this->fields = '*';
         }
     }
-
+    
     /**
      * Processes data defintion
      *
@@ -808,14 +808,14 @@ class QueryBuilder
                     case 'INSERT':
                         continue;
                         break;
-                    
-                    // Use field as filter on update
+                        
+                        // Use field as filter on update
                     case 'UPDATE':
                         $this->definition['filter'] = $field_name . ' = :__primary_' . $field_name;
                         $this->definition['params'][':__primary_' . $field_name] = $value;
                         break;
-                    
-                    // Add field to fieldlist on replace
+                        
+                        // Add field to fieldlist on replace
                     case 'REPLACE':
                     default:
                         $this->definition['fields'][] = $field_name;
@@ -830,7 +830,7 @@ class QueryBuilder
             }
         }
     }
-
+    
     /**
      * Processes join defintion.
      * Such definition can be an assoc or indexed array.
@@ -861,17 +861,17 @@ class QueryBuilder
             }
         }
     }
-
+    
     /**
      * Processes group defintion
      */
     private function processGroupByDefinition()
     {
         if (isset($this->definition['group'])) {
-            $this->group_by = $this->definition['group'];
+            $this->group_by = is_array($this->definition['group']) ? implode(', ', $this->definition['group']) : $this->definition['group'];
         }
     }
-
+    
     /**
      * Processes having defintion
      */
@@ -881,7 +881,7 @@ class QueryBuilder
             $this->having = $this->definition['having'];
         }
     }
-
+    
     /**
      * Processes filter defintion.
      * When Filter is an array
@@ -913,7 +913,7 @@ class QueryBuilder
             }
         }
     }
-
+    
     /**
      * Processes limit defintion
      */
@@ -929,31 +929,31 @@ class QueryBuilder
                     case 1:
                         $this->limit['lower'] = (int) $this->definition['limit'][0];
                         break;
-                    
+                        
                     case 2:
                     default:
                         $this->limit['lower'] = (int) $this->definition['limit'][0];
                         $this->limit['upper'] = (int) $this->definition['limit'][1];
                         break;
                 }
-            }            
+            }
             // Or single value?
             else {
                 $this->limit['lower'] = $this->definition['limit'];
             }
         }
     }
-
+    
     /**
      * Processes order defintion
      */
     private function processOrderDefinition()
     {
         if (isset($this->definition['order'])) {
-            $this->order = $this->definition['order'];
+            $this->order = is_array($this->definition['order']) ? implode(', ', $this->definition['order']) : $this->definition['order'];
         }
     }
-
+    
     /**
      * Processes parameter definition
      */
@@ -965,18 +965,18 @@ class QueryBuilder
             $this->setParameter($this->definition['param' . $extend]);
         }
     }
-
+    
     /**
      * Adds one parameter in form of key and value or a list of parameters as assoc array by resetting existing
      * parameters
-     * 
+     *
      * Setting an array as $arg1 and leaving $arg2 empty means to add an assoc array of paramters
      * Setting $arg1 and $arg2 means to set on parameter by name and value.
      *
      * @var string array String with parametername or list of parameters of type assoc array
      * @var string $arg2 Needs only to be set when seting on paramters by name and value.
      * @var bool $reset Optional: Set this to true when you want to reset already existing parameters
-     *     
+     *
      * @throws QueryBuilderException
      *
      * @return \Core\Data\Connectors\Db\QueryBuilder\QueryBuilder
@@ -998,7 +998,7 @@ class QueryBuilder
         
         return $this;
     }
-
+    
     /**
      * Returns all parameters
      *
@@ -1008,7 +1008,7 @@ class QueryBuilder
     {
         return $this->params;
     }
-
+    
     /**
      * Creates a string of named parameters and an array of named parameters => values.
      *
@@ -1038,7 +1038,7 @@ class QueryBuilder
             'values' => $params_val
         ];
     }
-
+    
     /**
      * Checks for an expression for a QB defintion
      *
@@ -1048,7 +1048,7 @@ class QueryBuilder
      *
      * @param string $expression
      *            The expression to check for an array with a QB definition
-     *            
+     *
      * @return string
      */
     private function checkSubquery($expression)
